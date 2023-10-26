@@ -1,7 +1,8 @@
-﻿using BLL.DTO;
+﻿using AutoMapper;
+using BLL.DTO;
 using BLL.Interface;
 using Microsoft.AspNetCore.Mvc;
-
+using NotesAspWeb.Model;
 
 namespace WEB.Controllers
 {
@@ -31,6 +32,14 @@ namespace WEB.Controllers
             return Ok(await _noteService.GetNoteAsync(id));
         }
 
+        [HttpGet("GetAll")]
+        public ActionResult<IEnumerable<NoteViewModel>> GetAll()
+        {
+            IEnumerable<NoteDTO> noteDtos = (IEnumerable<NoteDTO>)_noteService.GetNoteALL();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<NoteDTO, NoteViewModel>()).CreateMapper();
+            var notes = mapper.Map<IEnumerable<NoteDTO>, List<NoteViewModel>>(noteDtos);
+            return notes;
+        }
 
         [HttpPut("Update")]
         public async Task<ActionResult<NoteDTO>> UpdateNoteAsync(NoteDTO noteDTO)

@@ -8,6 +8,6 @@ namespace BLL.Interface
         Task<NoteDTO> GetNoteAsync(int id);
         Task DeleteNoteByIdAsync(int id);
         Task UpdateNoteAsync(NoteDTO note);
-
+        IEnumerable<NoteDTO> GetNoteALL();
     }
 }
