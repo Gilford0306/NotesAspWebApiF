@@ -74,5 +74,11 @@ namespace BLL.Service
 
             await _context.SaveChangesAsync();
         }
+
+        public IEnumerable<NoteDTO> GetNoteALL()
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Note, NoteDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Note>, List<NoteDTO>>(_context.Notes.ToList());
+        }
     }
 }
